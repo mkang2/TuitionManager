@@ -1,5 +1,6 @@
 /**
  * Controller class for GUI for tuition manager
+ * @author Ryan Pollack, Michael Kang
  */
 package com.example.project3;
 
