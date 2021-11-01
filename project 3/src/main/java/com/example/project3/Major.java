@@ -2,7 +2,7 @@ package com.example.project3;
 
 /**
  * Major enums
- * @author Wesam Saleh, Najibullah Assadullah
+ * @author Ryan Pollack, Michael Kang
  */
 public enum Major {
     CS,
