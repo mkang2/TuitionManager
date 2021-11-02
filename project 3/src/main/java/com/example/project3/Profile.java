@@ -1,4 +1,4 @@
-package com.example.project3;
+package com.example.project3 ;
 
 /**
  * This class is the profile of a student which contains their name and major
