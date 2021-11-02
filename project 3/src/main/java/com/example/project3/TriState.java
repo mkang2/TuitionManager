@@ -17,9 +17,9 @@ public class TriState extends NonResident
      * @param credits- credit amount
      * @param state- the tri-state (NY or CT) the student is from
      */
-    public TriState(String name, String major, int credits, String state)
+    public TriState(Profile profile, int credits, String state)
     {
-        super(name, major, credits);
+        super(profile, credits);
         this.state = state;
     }
 
