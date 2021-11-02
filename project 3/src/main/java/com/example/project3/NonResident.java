@@ -16,9 +16,9 @@ public class NonResident extends Student
      * @param major- student's major
      * @param credits- credit amount
      */
-    public NonResident(String name, Major major, int credits)
+    public NonResident(Profile profile, int credits)
     {
-        super(name, major, credits);
+        super(profile, credits);
     }
 
     /**
