@@ -18,9 +18,9 @@ public class International extends NonResident{
      * @param credits- credit amount
      * @param abroad- whether or not they are studying abroad
      */
-    public International(String name, String major, int credits, boolean abroad)
+    public International(Profile profile, int credits, boolean abroad)
     {
-        super(name, major, credits);
+        super(profile, credits);
         isStudyingAbroad = abroad;
     }
 
