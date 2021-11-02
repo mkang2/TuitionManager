@@ -1,7 +1,5 @@
 package com.example.project3;
 
-import javafx.scene.control.TextArea;
-
 /**
  * This is the roster class, which is a growable array list data structure of students.
  * It includes methods that manipulate the array and its students. 
@@ -129,7 +127,7 @@ public class Roster
             }
         }
 
-    }   
+    }
 
 	/**
 	 * This is the set abroad status, which updates the studying abroad status of an international student
