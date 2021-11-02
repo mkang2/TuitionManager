@@ -18,9 +18,9 @@ public class Resident extends Student
      * @param major- the major of student
      * @param credits- the amount of credits
      */
-    public Resident(String name, Major major, int credits)
+    public Resident(Profile profile, int credits)
     {
-        super(name, major, credits);
+        super(profile, credits);
     }
 
     /**
