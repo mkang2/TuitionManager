@@ -29,17 +29,17 @@ public class Student
     /**
      * Constructor where name, major, and credit amount is known.
      * Sets tuition to zero by default.
-     * @param name- name of student
-     * @param major- major of student
+     * @param profile- (name/age) of student
      * @param credits- number of credits student is taking
      */
-    public Student(String name, Major major, int credits)
+    public Student(Profile profile, int credits)
     {
-        profile = new Profile(name, major);
+        this.profile = profile;
         this.credits = credits;
-        tuition = 0;
+        this.tuition = 0;
+       // this.payments = 0;
+        this.lastPaymentDate = null;
     }
-
     /**
      * Constructor where name and major is known.
      * @param name- name of student
