@@ -1,173 +1,92 @@
 package com.example.project3;
 
-import java.text.DecimalFormat;
-
 /**
- * This is the superclass that represents a Student object
- * Has two subclasses that are Resident and NonResident
+ * The is a subclass that represents a tri-state student
+ * Subclass of nonresident
  * @author Ryan Pollack, Michael Kang
  */
-public class Student
+public class TriState extends NonResident
 {
-    private Profile profile;
 
-    private int credits;
-    private double tuition;
-    private double totalPayment;
-    private Date lastPaymentDate;
+    private String state;
 
-    public static final int MIN_CREDITS_FULL_TIME = 12;
-    public static final int MIN_CREDITS = 3;
-    public static final int MAX_CREDITS = 24;
-    public static final int EXCEED_CREDITS = 16;
-    public static final int UNIVERSITY_FEE = 3268;
-    public static final double PART_TIME_RATE = 0.8;
-
-    private static final String FORMAT = "##,##0.00";
-    public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat(FORMAT);
-    
     /**
-     * Constructor where name, major, and credit amount is known.
-     * Sets tuition to zero by default.
-     * @param profile- (name/age) of student
-     * @param credits- number of credits student is taking
+     * Constructor where name, major, credits, and state is known.
+     * @param name- student's name
+     * @param major- student's major
+     * @param credits- credit amount
+     * @param state- the tri-state (NY or CT) the student is from
      */
-    public Student(Profile profile, int credits)
+    public TriState(Profile profile, int credits, String state)
     {
-        this.profile = profile;
-        this.credits = credits;
-        this.tuition = 0;
-       // this.payments = 0;
-        this.lastPaymentDate = null;
-    }
-    /**
-     * Constructor where name and major is known.
-     * @param name- name of student
-     * @param major- major of student
-     */
-    public Student(String name, Major major)
-    {
-        profile = new Profile(name, major);
+        super(profile, credits);
+        this.state = state;
     }
 
     /**
-     * Getter method for profile of student
-     * @return profile
+     * Calculates tuition due for the tri-state student
      */
-    public Profile getProfile()
-    {
-        return profile;
-    }
-
-    /**
-     * Getter method for credits
-     * @return amount of credits
-     */
-    public int getCredits()
-    {
-        return credits;
-    }
-
-    /**
-     * Getter method for tuition
-     * @return tuition
-     */
-    public double getTuition()
-    {
-        return tuition;
-    }
-
-    /**
-     * Getter for date of last payment
-     * @return the last payment date
-     */
-    public Date getLastPaymentDate()
-    {
-        return lastPaymentDate;
-    }
-
-    /**
-     * Getter method for total payment
-     * @return total payment
-     */
-    public double getTotalPayment()
-    {
-        return totalPayment;
-    }
-
-    /**
-     * Setter method for tuition
-     * @param the new tuition value
-     */
-    public void setTuition(double tuition)
-    {
-        this.tuition = tuition;
-    }
-
-    /**
-     * Setter method for credits
-     * @param the new amount of credits
-     */
-    public void setCredits(int credits)
-    {
-        this.credits = credits;
-    }
-
-    /**
-     * Setter method for the date of the latest payment
-     * @param the new last payment date
-     */
-    public void setDate(Date date)
-    {
-        lastPaymentDate = date;
-    }
-
-    /**
-     * Setter method for total payment
-     * @param the new amount
-     */
-    public void setTotalPayment(double amount)
-    {
-        totalPayment = amount;
-    }
-    
-    /**
-     * Method that subclasses will override
-     */
+    @Override
     public void tuitionDue()
     {
-    	//overridden
+        int credits = getCredits();
+        int whatTime;
+        int triStateDiscount = 0;
+        double fee = 0;
+        int excess = 0;      
+        
+        //checks if credits are above alotted amount
+        if(credits > EXCEED_CREDITS)
+        {
+        	excess = credits % EXCEED_CREDITS * CREDIT_HOURS;
+        }else
+        {
+        	excess = 0;
+        }
+        
+        //check if student is full or part time
+        if(credits >= MIN_CREDITS_FULL_TIME)
+        {
+            whatTime = FULL_TUITION;
+            fee = UNIVERSITY_FEE;
+        }else
+        {
+            whatTime = credits * CREDIT_HOURS;
+            fee = UNIVERSITY_FEE * PART_TIME_RATE;
+        }
+        
+        if(credits >= MIN_CREDITS_FULL_TIME)
+        {
+            if (state.equals("NY")) 
+            {
+            	triStateDiscount = 4000;
+            }else 
+            {
+            	triStateDiscount = 5000;
+            }
+        }
+        setTuition(whatTime + excess + fee - triStateDiscount);
     }
 
     /**
-     * Makes a payment towards the tuition that is due
-     * @param amount- payment amount
-     * @param date- the date of the payment
-     */
-    public void makePayment(double amountPaid, Date date)
-    {
-        tuition = tuition - amountPaid;
-        totalPayment += amountPaid;
-        lastPaymentDate = date;
-    }
-
-    /**
-     * Makes a string representation of a Student object
+     * Makes a string representation of TriState
      * @return the string representation
      */
     @Override
     public String toString()
     {
-        String date = "";
+    	String date = "";
         
-        if(lastPaymentDate == null) 
+        if(getLastPaymentDate() == null) 
         {
         	date = "--/--/--";
         }else
         {
-        	date = lastPaymentDate.toString();
+        	date = getLastPaymentDate().toString();
         }
-        return profile.toString() + ":" + credits +  " credit hours:tuition due:" + tuition
-                + ":total payment:" + totalPayment + ":last payment date: " + date;       
+        return getProfile().toString() + ":" + getCredits() +  " credit hours:tuition due:"
+                + Student.DECIMAL_FORMAT.format(getTuition()) + ":total payment:"
+                + Student.DECIMAL_FORMAT.format(getTotalPayment()) + ":last payment date: " 
+                + date + ":non-resident(tri-state):" + state;
     }
 }
